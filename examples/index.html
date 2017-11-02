@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <title>Vue PayStack Example</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <script src="https://unpkg.com/vue@2.3.3/dist/vue.js"></script>
+    <script src="../dist/paystack.min.js"></script>
+    <style>
+    body {
+        font-size: 1em;
+        font-family: 'Tahoma', sans-serif;
+    }
+
+    .payButton{
+        color: #61DAFB;
+        width: 250px;
+        height: 50px;
+        font-weight: 800;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <paystack
+                :amount="amount"
+                :email="email"
+                :paystackkey="paystackkey"
+                :reference="reference"
+                :callback="callback"
+                :close="close"
+        ></paystack>
+    </div>
+
+    <script type="text/javascript">
+    new Vue({
+        el: '#app',
+        components:{
+          'paystack': VuePaystack.default
+        },
+        computed: {
+        reference(){
+          let text = "";
+          let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+          for( let i=0; i < 10; i++ )
+            text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+          return text;
+        }
+        },
+        methods: {
+          callback: function(response){
+            console.log(response)
+          },
+          close: function(){
+            console.log("Payment closed")
+          }
+        },
+        data: {
+          paystackBtnText: "Pay Me, My Money",
+          paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxx",
+          email: "foobar@example.com",
+          amount: 1000000,
+        }
+    });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+{
+  "extends": "vue",
+   "rules": {
+     "space-before-function-paren": [2, "never"],
+      "indent": ["error",4],
+      "camelcase": [2, {"properties": "never"}]
+   }
+}
