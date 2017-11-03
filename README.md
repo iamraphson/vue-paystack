@@ -1,7 +1,7 @@
 # Paystack Component for Vue 2.x
 A Vue Plugin for Paystack payment gateway.
 
-###Demo
+### Demo
 
 ![Demo Image](vue-paystack.png?raw=true "Demo Image")
 
