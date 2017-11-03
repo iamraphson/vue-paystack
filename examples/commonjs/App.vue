@@ -15,7 +15,6 @@
 
 <script type="text/javascript">
 import paystack from '../../src';
-import axios from 'axios';
 export default {
     components: {
         paystack
