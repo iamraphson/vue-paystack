@@ -9,7 +9,7 @@ A Vue Plugin for Paystack payment gateway.
 
 #### NPM
 ```
-npm install vue iamraphson/vue-paystack --save 
+npm install vue vue-paystack --save 
 ``` 
 
 #### Javascript via CDN
