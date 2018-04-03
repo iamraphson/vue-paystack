@@ -34,6 +34,7 @@ npm install vue vue-paystack --save
         :reference="reference"
         :callback="callback"
         :close="close"
+        :embed="false"
     ></paystack>
 </template>
 
