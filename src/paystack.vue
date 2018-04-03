@@ -1,13 +1,15 @@
 <template>
-    <button v-text="text" class="payButton" @click="payWithPaystack"></button>
+    <button v-if="!embed" v-text="text" class="payButton" @click="payWithPaystack"></button>
+    <div v-else id="paystackEmbedContainer"></div>
 </template>
 
 <script type="text/javascript">
-  const script = document.createElement('script')
-  script.src = 'https://js.paystack.co/v1/inline.js'
-  document.getElementsByTagName('head')[0].appendChild(script)
   export default {
       props: {
+          embed: {
+              type: Boolean,
+              default: false
+          },
           paystackkey: {
               type: String,
               required: true
@@ -67,28 +69,70 @@
               default: ''
           }
       },
-      methods: {
-          payWithPaystack() {
-              const handler = window.PaystackPop.setup({
-                  key: this.paystackkey,
-                  email: this.email,
-                  amount: this.amount,
-                  ref: this.reference,
-                  callback: (response) => {
-                      this.callback(response)
-                  },
-                  onClose: () => {
-                      this.close()
-                  },
-                  metadata: this.metadata,
-                  currency: this.currency,
-                  plan: this.plan,
-                  quantity: this.quantity,
-                  subaccount: this.subaccount,
-                  transaction_charge: this.transaction_charge,
-                  bearer: this.bearer
+      computed: {
+          scriptLoaded: function() {
+              return new Promise((resolve) => {
+                  this.loadScript(() => {
+                      resolve()
+                  })
               })
-              handler.openIframe()
+          }
+      },
+      mounted() {
+          if (this.embed) {
+              this.payWithPaystack()
+          }
+      },
+      methods: {
+          loadScript(callback) {
+              const script = document.createElement('script')
+              script.src = 'https://js.paystack.co/v1/inline.js'
+              document.getElementsByTagName('head')[0].appendChild(script)
+              if (script.readyState) {  // IE
+                  script.onreadystatechange = () => {
+                      if (script.readyState === 'loaded' || script.readyState === 'complete') {
+                          script.onreadystatechange = null
+                          callback()
+                      }
+                  }
+              } else {  // Others
+                  script.onload = () => {
+                      callback()
+                  }
+              }
+          },
+
+          payWithPaystack() {
+              this.scriptLoaded.then(() => {
+                  const paystackOptions = {
+                      key: this.paystackkey,
+                      email: this.email,
+                      amount: this.amount,
+                      ref: this.reference,
+                      callback: (response) => {
+                          this.callback(response)
+                      },
+                      onClose: () => {
+                          this.close()
+                      },
+                      metadata: this.metadata,
+                      currency: this.currency,
+                      plan: this.plan,
+                      quantity: this.quantity,
+                      subaccount: this.subaccount,
+                      transaction_charge: this.transaction_charge,
+                      bearer: this.bearer
+                  }
+
+                  if (this.embed) {
+                      paystackOptions.container = 'paystackEmbedContainer'
+                  }
+
+                  const handler = window.PaystackPop.setup(paystackOptions)
+                  if (!this.embed) {
+                      handler.openIframe()
+                  }
+              })
           }
       }
   }

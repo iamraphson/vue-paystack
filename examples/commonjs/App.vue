@@ -8,6 +8,7 @@
                 :reference="reference"
                 :callback="callback"
                 :close="close"
+                :embed="false"
             ></paystack>
         </p>
     </div>
