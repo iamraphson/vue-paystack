@@ -9,7 +9,10 @@
                 :callback="callback"
                 :close="close"
                 :embed="false"
+                trigger-class="custom-btn"
             ></paystack>
+
+            <button class="custom-btn">Pay Now</button>
         </p>
     </div>
 </template>

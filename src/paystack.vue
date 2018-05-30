@@ -1,6 +1,6 @@
 <template>
-    <button v-if="!embed" v-text="text" class="payButton" @click="payWithPaystack"></button>
-    <div v-else id="paystackEmbedContainer"></div>
+    <button v-if="!embed && !triggerClass" v-text="text" class="payButton" @click="payWithPaystack"></button>
+    <div v-else-if="embed && !triggerClass" id="paystackEmbedContainer"></div>
 </template>
 
 <script type="text/javascript">
@@ -9,6 +9,10 @@
           embed: {
               type: Boolean,
               default: false
+          },
+          triggerClass: {
+              type: String,
+              required: false
           },
           paystackkey: {
               type: String,
@@ -79,8 +83,14 @@
           }
       },
       mounted() {
-          if (this.embed) {
+          if (this.embed && !this.triggerClass) {
               this.payWithPaystack()
+          } else if (this.triggerClass) {
+              document.body.addEventListener('click', _e => {
+                  if (_e.target.classList.contains(this.triggerClass)) {
+                      this.payWithPaystack()
+                  }
+              })
           }
       },
       methods: {
