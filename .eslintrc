@@ -1,5 +1,5 @@
 {
-  "extends": "vue",
+  "extends": ["plugin:vue/recommended"],
    "rules": {
      "space-before-function-paren": [2, "never"],
       "indent": ["error",4],
