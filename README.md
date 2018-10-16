@@ -35,7 +35,10 @@ npm install vue vue-paystack --save
         :callback="callback"
         :close="close"
         :embed="false"
-    ></paystack>
+    >
+       <i class="fas fa-money-bill-alt"></i>
+       Make Payment
+    </paystack>
 </template>
 
 <script type="text/javascript">
@@ -46,7 +49,6 @@ export default {
     },
     data(){
         return{
-          paystackBtnText: "Pay Me, My Money",
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx", //paystack public key
           email: "foobar@example.com", // Customer email
           amount: 1000000 // in kobo
@@ -102,7 +104,6 @@ new Vue({
           }
         },
         data: {
-          paystackBtnText: "Pay Me, My Money",
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxx", //paystack public key
           email: "foobar@example.com", // Customer email
           amount: 1000000, // in kobo

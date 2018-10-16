@@ -9,7 +9,9 @@
                 :callback="callback"
                 :close="close"
                 :embed="false"
-            ></paystack>
+            >
+                <i>Pay me, My Money</i>
+            </paystack>
         </p>
     </div>
 </template>
@@ -22,7 +24,6 @@ export default {
     },
     data(){
         return{
-          paystackBtnText: "Pay Me, My Money",
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx",
           email: "foobar@example.com",
           amount: 1000000

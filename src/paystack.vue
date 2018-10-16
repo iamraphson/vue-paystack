@@ -3,10 +3,13 @@
     v-if="!embed"
     class="payButton"
     @click="payWithPaystack"
-    v-text="text"/>
+  >
+    <slot>Make Payment</slot>
+  </button>
   <div
     v-else
-    id="paystackEmbedContainer"/>
+    id="paystackEmbedContainer"
+  />
 </template>
 
 <script type="text/javascript">
@@ -41,10 +44,6 @@ export default {
             type: Function,
             required: true,
             default: function() {}
-        },
-        text: {
-            type: String,
-            default: 'Make Payment'
         },
         metadata: {
             type: Object,

@@ -3,6 +3,7 @@
 <head>
     <title>Vue PayStack Example</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="../dist/paystack.min.js"></script>
     <style>
@@ -10,27 +11,23 @@
         font-size: 1em;
         font-family: 'Tahoma', sans-serif;
     }
-
-    .payButton{
-        color: #61DAFB;
-        width: 250px;
-        height: 50px;
-        font-weight: 800;
-    }
     </style>
 </head>
 
 <body>
     <div id="app">
         <paystack
-                :amount="amount"
-                :email="email"
-                :paystackkey="paystackkey"
-                :reference="reference"
-                :callback="callback"
-                :close="close"
-                :embed="false"
-        ></paystack>
+            :amount="amount"
+            :email="email"
+            :paystackkey="paystackkey"
+            :reference="reference"
+            :callback="callback"
+            :close="close"
+            :embed="false"
+        />
+            <i class="fas fa-money-bill-alt"></i>
+            Make Payment
+        </paystack>
     </div>
 
     <script type="text/javascript">
@@ -59,7 +56,6 @@
           }
         },
         data: {
-          paystackBtnText: "Pay Me, My Money",
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxx",
           email: "foobar@example.com",
           amount: 1000000,
