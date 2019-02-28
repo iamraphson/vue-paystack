@@ -65,7 +65,7 @@ export default {
             type: String,
             default: ''
         },
-        transaction_charge: {
+        transactionCharge: {
             type: Number,
             default: 0
         },
