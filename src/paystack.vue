@@ -74,19 +74,17 @@ export default {
             default: ''
         }
     },
-    computed: {
-        scriptLoaded: function() {
-            /**
-             * TODO:
-             * Find a fix to move promise away from computed
-             **/
-            /* eslint-disable vue/no-async-in-computed-properties */
-            return new Promise((resolve) => {
-                this.loadScript(() => {
-                    resolve()
-                })
-            })
+    data(){
+        return {
+            scriptLoaded: null
         }
+    },
+    created() {
+        this.scriptLoaded = new Promise((resolve) => {
+            this.loadScript(() => {
+                resolve()
+            })
+        })
     },
     mounted() {
         if (this.embed) {
@@ -113,7 +111,7 @@ export default {
         },
 
         payWithPaystack() {
-            this.scriptLoaded.then(() => {
+            this.scriptLoaded && this.scriptLoaded.then(() => {
                 const paystackOptions = {
                     key: this.paystackkey,
                     email: this.email,
