@@ -26,8 +26,7 @@ export default {
         return{
           paystackkey: "pk_test_a137d402b5975716e89952a898aad2832c961d69",
           email: "foobar@example.com",
-          amount: 1000000,
-          anotherPayment: false
+          amount: 1000000
         }
     },
     computed: {
@@ -44,11 +43,9 @@ export default {
     methods: {
       callback: function(response){
         console.log(response)
-        this.anotherPayment = true
       },
       close: function(){
         console.log("Payment closed")
-        this.anotherPayment = true
       }
     }
 }
