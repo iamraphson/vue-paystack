@@ -49,6 +49,7 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "terser-webpack-plugin": "^2.1.0",
     "vue": "^2.6.7"
   }
 }

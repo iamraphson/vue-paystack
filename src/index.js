@@ -1,3 +1,3 @@
-import paystack from './paystack.vue'
-
-export default paystack
+import paystack from "./paystack.vue";
+console.log("here");
+export default paystack;
