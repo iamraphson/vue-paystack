@@ -33,7 +33,7 @@ export default {
         },
         reference: {
             type: String,
-            required: true
+            required: false
         },
         callback: {
             type: Function,
