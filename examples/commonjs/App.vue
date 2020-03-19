@@ -4,6 +4,10 @@
             <paystack
                 :amount="amount"
                 :email="email"
+                :firstname="firstname"
+                :lastname="lastname"
+                :accessCode="accessCode"
+                :ref="reference"
                 :paystackkey="paystackkey"
                 :reference="reference"
                 :callback="callback"
@@ -25,12 +29,17 @@ export default {
     data(){
         return{
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx",
+          firstname: "Foo",
+          lastname: "Bar",
           email: "foobar@example.com",
-          amount: 1000000
+          amount: 1000000,
+          accessCode: "example-access-code",
+          reference: "example-reference",
+          channels: ['card']
         }
     },
     computed: {
-      reference(){
+      genReference(){
         let text = "";
         let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
