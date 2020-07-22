@@ -1,6 +1,6 @@
 {
   "name": "vue-paystack",
-  "version": "2.0.1",
+  "version": "2.0.3",
   "description": "Vue Paystack Component for Vue 2.x.",
   "main": "dist/paystack.min.js",
   "scripts": {
@@ -47,5 +47,8 @@
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
+  },
+  "dependencies": {
+    "vue": "^2.6.7"
   }
 }
