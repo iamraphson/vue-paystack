@@ -85,6 +85,12 @@ export default {
             type: String,
             default: ""
         },
+        split: {
+            type: Object,
+            default: function() {
+                return {};
+            }
+        },
         splitCode: {
             type: String,
             default: ""
@@ -139,6 +145,10 @@ export default {
             }
         },
 
+        isDynamicSplit() {
+            return this.split.constructor === Object && Object.keys(this.split).length > 0;
+        },
+
         payWithPaystack() {
             this.scriptLoaded &&
         this.scriptLoaded.then(() => {
@@ -161,10 +171,11 @@ export default {
                 currency: this.currency,
                 plan: this.plan,
                 quantity: this.quantity,
-                subaccount: this.subaccount,
-                split_code: this.splitCode,
-                transaction_charge: this.transactionCharge,
-                bearer: this.bearer
+                subaccount: this.isDynamicSplit() ? "" : this.subaccount,
+                split: this.isDynamicSplit() ? this.split : {},
+                split_code: this.isDynamicSplit() ? "" : this.splitCode,
+                transaction_charge: this.isDynamicSplit() ? 0 : this.transactionCharge,
+                bearer: this.isDynamicSplit() ? "" : this.bearer
             };
 
             if (this.embed) {

@@ -8,6 +8,7 @@
                 :lastname="lastname"
                 :accessCode="accessCode"
                 :splitCode="splitCode"
+                :split="split"
                 :paystackkey="paystackkey"
                 :reference="genReference"
                 :callback="callback"
@@ -32,8 +33,9 @@ export default {
           firstname: "Foo",
           lastname: "Bar",
           email: "foo@bar.com",
-          amount: 2000000,
+          amount: 200000,
           splitCode: "",
+          split: {},
           channels: ['card']
         }
     },
