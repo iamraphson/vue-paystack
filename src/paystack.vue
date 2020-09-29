@@ -172,7 +172,7 @@ export default {
                 plan: this.plan,
                 quantity: this.quantity,
                 subaccount: this.isDynamicSplit() ? "" : this.subaccount,
-                split: this.isDynamicSplit() ? this.split : {},
+                split: this.isDynamicSplit() ? this.split : null,
                 split_code: this.isDynamicSplit() ? "" : this.splitCode,
                 transaction_charge: this.isDynamicSplit() ? 0 : this.transactionCharge,
                 bearer: this.isDynamicSplit() ? "" : this.bearer
