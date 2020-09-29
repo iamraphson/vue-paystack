@@ -112,7 +112,7 @@ new Vue({
 ```
 [Usage Example via CDN](examples/index.html)
 
-Please checkout [Paystack Documentation](https://developers.paystack.co/docs/paystack-inline) for other available options you can add to the 
+Please checkout [Paystack Documentation](https://paystack.com/docs/payments/accept-payments#popup) for other available options you can add to the 
 
 ## Deployment
 REMEMBER TO CHANGE THE KEY WHEN DEPLOYING ON A LIVE/PRODUCTION SYSTEM
