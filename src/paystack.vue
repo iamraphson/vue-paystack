@@ -162,8 +162,8 @@ export default {
                 plan: this.plan,
                 quantity: this.quantity,
                 subaccount: this.subaccount,
-                split_code: this.split_code,
-                transaction_charge: this.transaction_charge,
+                split_code: this.splitCode,
+                transaction_charge: this.transactionCharge,
                 bearer: this.bearer
             };
 

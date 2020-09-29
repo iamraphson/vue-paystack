@@ -7,9 +7,9 @@
                 :firstname="firstname"
                 :lastname="lastname"
                 :accessCode="accessCode"
-                :ref="reference"
+                :splitCode="splitCode"
                 :paystackkey="paystackkey"
-                :reference="reference"
+                :reference="genReference"
                 :callback="callback"
                 :close="close"
                 :embed="false"
@@ -31,10 +31,9 @@ export default {
           paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx",
           firstname: "Foo",
           lastname: "Bar",
-          email: "foobar@example.com",
-          amount: 1000000,
-          accessCode: "example-access-code",
-          reference: "example-reference",
+          email: "foo@bar.com",
+          amount: 2000000,
+          splitCode: "",
           channels: ['card']
         }
     },
