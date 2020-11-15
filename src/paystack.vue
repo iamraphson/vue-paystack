@@ -41,7 +41,7 @@ export default {
         },
         reference: {
             type: String,
-            required: true
+            required: false
         },
         channels: {
             type: Array,
