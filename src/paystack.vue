@@ -1,11 +1,21 @@
 <template>
-  <button
+  <div
     v-if="!embed"
-    class="payButton"
+    class="payContainer"
     @click="payWithPaystack"
   >
-    <slot>Make Payment</slot>
-  </button>
+    <slot v-if="custombutton" />
+    <button
+      v-if="!custombutton"
+      class="payButton"
+    >
+      <slot
+        v-if="!custombutton"
+      >
+        Make Payment
+      </slot>
+    </button>
+  </div>
   <div
     v-else
     id="paystackEmbedContainer"
@@ -15,6 +25,10 @@
 <script type="text/javascript">
 export default {
     props: {
+        custombutton: {
+            type:Boolean,
+            default : false
+        },
         embed: {
             type: Boolean,
             default: false
