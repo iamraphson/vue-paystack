@@ -1,8 +1,8 @@
 {
-  "extends": ["plugin:vue/recommended"],
-   "rules": {
-     "space-before-function-paren": [2, "never"],
-      "indent": ["error",4],
-      "camelcase": [2, {"properties": "never"}]
-   }
+  "extends": ["eslint:recommended", "plugin:vue/vue3-recommended"],
+  "rules": {
+    "space-before-function-paren": [2, "never"],
+    "indent": ["error", 4],
+    "camelcase": [2, { "properties": "never" }]
+  }
 }

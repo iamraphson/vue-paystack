@@ -12,119 +12,110 @@
   />
 </template>
 
-<script type="text/javascript">
-export default {
+<script>
+import { defineComponent, ref, onBeforeMount, onMounted } from "vue";
+
+export default defineComponent({
+    name: "PayStack",
     props: {
         embed: {
             type: Boolean,
-            default: false
+            default: false,
         },
         paystackkey: {
             type: String,
-            required: true
+            required: true,
         },
         email: {
             type: String,
-            required: true
+            required: true,
         },
         firstname: {
             type: String,
-            default: ""
+            default: "",
         },
         lastname: {
             type: String,
-            default: ""
+            default: "",
         },
         amount: {
             type: Number,
-            required: true
+            required: true,
         },
         reference: {
             type: String,
-            required: true
+            required: true,
         },
         channels: {
             type: Array,
             default: function() {
                 return ["card", "bank"];
-            }
+            },
         },
         accessCode: {
             type: String,
-            default: ""
+            default: "",
         },
         callback: {
             type: Function,
             required: true,
-            default: function(response) {}
+            default: function(response) {
+                return response;
+            },
         },
         close: {
             type: Function,
             required: true,
-            default: function() {}
+            default: function() {},
         },
         metadata: {
             type: Object,
             default: function() {
                 return {};
-            }
+            },
         },
         currency: {
             type: String,
-            default: "NGN"
+            default: "NGN",
         },
         plan: {
             type: String,
-            default: ""
+            default: "",
         },
         quantity: {
             type: String,
-            default: ""
+            default: "",
         },
         subaccount: {
             type: String,
-            default: ""
+            default: "",
         },
         split: {
             type: Object,
             default: function() {
                 return {};
-            }
+            },
         },
         splitCode: {
             type: String,
-            default: ""
+            default: "",
         },
         transactionCharge: {
             type: Number,
-            default: 0
+            default: 0,
         },
         bearer: {
             type: String,
-            default: ""
-        }
+            default: "",
+        },
     },
-    data() {
-        return {
-            scriptLoaded: null
-        };
-    },
-    created() {
-        this.scriptLoaded = new Promise(resolve => {
-            this.loadScript(() => {
-                resolve();
-            });
-        });
-    },
-    mounted() {
-        if (this.embed) {
-            this.payWithPaystack();
-        }
-    },
-    methods: {
-        loadScript(callback) {
+
+    setup(props) {
+        const scriptLoaded = ref(null);
+        let loadScript = (callback) => {
             const script = document.createElement("script");
             script.src = "https://js.paystack.co/v1/inline.js";
+
             document.getElementsByTagName("head")[0].appendChild(script);
             if (script.readyState) {
                 // IE
@@ -143,52 +134,69 @@ export default {
                     callback();
                 };
             }
-        },
+        };
+        let isDynamicSplit = () => {
+            return (
+                props.split.constructor === Object &&
+        Object.keys(props.split).length > 0
+            );
+        };
 
-        isDynamicSplit() {
-            return this.split.constructor === Object && Object.keys(this.split).length > 0;
-        },
-
-        payWithPaystack() {
-            this.scriptLoaded &&
-        this.scriptLoaded.then(() => {
+        let payWithPaystack = () => {
+            scriptLoaded.value &&
+        scriptLoaded.value.then(() => {
             const paystackOptions = {
-                key: this.paystackkey,
-                email: this.email,
-                firstname: this.firstname,
-                lastname: this.lastname,
-                channels: this.channels,
-                amount: this.amount,
-                access_code: this.accessCode,
-                ref: this.reference,
-                callback: response => {
-                    this.callback(response);
+                key: props.paystackkey,
+                email: props.email,
+                firstname: props.firstname,
+                lastname: props.lastname,
+                channels: props.channels,
+                amount: props.amount,
+                access_code: props.accessCode,
+                ref: props.reference,
+                callback: (response) => {
+                    props.callback(response);
                 },
                 onClose: () => {
-                    this.close();
+                    props.close();
                 },
-                metadata: this.metadata,
-                currency: this.currency,
-                plan: this.plan,
-                quantity: this.quantity,
-                subaccount: this.isDynamicSplit() ? "" : this.subaccount,
-                split: this.isDynamicSplit() ? this.split : null,
-                split_code: this.isDynamicSplit() ? "" : this.splitCode,
-                transaction_charge: this.isDynamicSplit() ? 0 : this.transactionCharge,
-                bearer: this.isDynamicSplit() ? "" : this.bearer
+                metadata: props.metadata,
+                currency: props.currency,
+                plan: props.plan,
+                quantity: props.quantity,
+                subaccount: isDynamicSplit() ? "" : props.subaccount,
+                split: isDynamicSplit() ? props.split.value : null,
+                split_code: isDynamicSplit() ? "" : props.splitCode,
+                transaction_charge: isDynamicSplit() ? 0 : props.transactionCharge,
+                bearer: isDynamicSplit() ? "" : props.bearer,
             };
 
-            if (this.embed) {
+            if (props.embed) {
                 paystackOptions.container = "paystackEmbedContainer";
             }
 
             const handler = window.PaystackPop.setup(paystackOptions);
-            if (!this.embed) {
+            if (!props.embed) {
                 handler.openIframe();
             }
         });
-        }
-    }
-};
-</script>
-
+        };
+        onBeforeMount(() => {
+            scriptLoaded.value = new Promise((resolve) => {
+                loadScript(() => {
+                    resolve();
+                });
+            });
+        });
+        onMounted(() => {
+            if (props.embed) {
+                payWithPaystack();
+            }
+        });
+        return {
+            payWithPaystack,
+            // scriptLoaded: scriptLoaded.value,
+        };
+    },
+});
+</script>>
