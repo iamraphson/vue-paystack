@@ -22,7 +22,6 @@ module.exports = defineConfig({
         // for externalized deps
         {
           name: "Paystack",
-          // esModule: false,
           exports: "named",
           format: "umd",
 

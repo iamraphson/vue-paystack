@@ -195,7 +195,6 @@ export default defineComponent({
         });
         return {
             payWithPaystack,
-            // scriptLoaded: scriptLoaded.value,
         };
     },
 });
