@@ -1,4 +1,5 @@
-# Paystack Component for Vue 2.x
+# Paystack Component for Vue 3.x
+
 A Vue Plugin for Paystack payment gateway.
 
 ### Demo
@@ -8,16 +9,18 @@ A Vue Plugin for Paystack payment gateway.
 ### Install
 
 #### NPM
+
 ```
-npm install vue vue-paystack --save 
-``` 
+npm install vue vue-paystack --save
+```
 
 #### Javascript via CDN
+
 ```javascript 1.8
 <!-- Vue -->
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue@next"></script>
 <!-- Vue-Paystack -->
-<script src="https://unpkg.com/vue-paystack/dist/paystack.min.js"></script>
+<script src="https://unpkg.com/vue-paystack/dist/paystack.umd.min.js"></script>
 ```
 
 ### Usage
@@ -25,100 +28,111 @@ npm install vue vue-paystack --save
 #### Via NPM
 
 ###### my-compnent.vue sample
+
 ```vue
 <template>
-    <paystack
-        :amount="amount"
-        :email="email"
-        :paystackkey="paystackkey"
-        :reference="reference"
-        :callback="callback"
-        :close="close"
-        :embed="false"
-    >
-       <i class="fas fa-money-bill-alt"></i>
-       Make Payment
-    </paystack>
+  <paystack
+    :amount="amount"
+    :email="email"
+    :paystackkey="paystackkey"
+    :reference="reference"
+    :callback="callback"
+    :close="close"
+    :embed="false"
+  >
+    <i class="fas fa-money-bill-alt"></i>
+    Make Payment
+  </paystack>
 </template>
 
 <script type="text/javascript">
-import paystack from 'vue-paystack';
+import paystack from "vue-paystack";
 export default {
-    components: {
-        paystack
-    },
-    data(){
-        return{
-          paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx", //paystack public key
-          email: "foobar@example.com", // Customer email
-          amount: 1000000 // in kobo
-        }
-    },
-    computed: {
-      reference(){
-        let text = "";
-        let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  components: {
+    paystack,
+  },
+  data() {
+    return {
+      paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx", //paystack public key
+      email: "foobar@example.com", // Customer email
+      amount: 1000000, // in kobo
+    };
+  },
+  computed: {
+    reference() {
+      let text = "";
+      let possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( let i=0; i < 10; i++ )
-          text += possible.charAt(Math.floor(Math.random() * possible.length));
+      for (let i = 0; i < 10; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
 
-        return text;
-      }
+      return text;
     },
-    methods: {
-      callback: function(response){
-        console.log(response)
-      },
-      close: function(){
-          console.log("Payment closed")
-      }
-    }
-}
+  },
+  methods: {
+    callback: function (response) {
+      console.log(response);
+    },
+    close: function () {
+      console.log("Payment closed");
+    },
+  },
+};
 </script>
 ```
+
 [Usage Example via NPM or Yarn](examples/commonjs/App.vue)
+
 #### via CDN
-```javascript 1.8
-new Vue({
-        el: '#app',
-        components:{
-          'paystack': VuePaystack.default
-        },
-        computed: {
-        reference(){
-          let text = "";
-          let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-          for( let i=0; i < 10; i++ )
-            text += possible.charAt(Math.floor(Math.random() * possible.length));
+```javascript
+const app = Vue.createApp({
+  components: { PayStack: Paystack.default },
+  setup() {
+    const paystackkey = Vue.ref("pk_test_xxxxxxxxxxxxxxxxxxxxxx");
+    const email = Vue.ref("foobar@example.com");
+    const amount = Vue.ref(1000000);
+    let reference = Vue.computed(() => {
+      let text = "";
+      let possible =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-          return text;
-        }
-        },
-        methods: {
-          callback: function(response){
-            console.log(response)
-          },
-          close: function(){
-            console.log("Payment closed")
-          }
-        },
-        data: {
-          paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxx", //paystack public key
-          email: "foobar@example.com", // Customer email
-          amount: 1000000, // in kobo
-        }
+      for (let i = 0; i < 10; i++)
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+      return text;
     });
+    let callback = (response) => {
+      console.log({ response });
+    };
+    let close = () => {
+      console.log("payment closed");
+    };
+    return {
+      reference: reference,
+      callback: callback,
+      close: close,
+      paystackkey: paystackkey.value,
+      email: email.value,
+      amount: amount.value,
+    };
+  },
+});
+
+app.mount("#app");
 ```
+
 [Usage Example via CDN](examples/index.html)
 
-Please checkout [Paystack Documentation](https://paystack.com/docs/payments/accept-payments#popup) for other available options you can add to the 
+Please checkout [Paystack Documentation](https://paystack.com/docs/payments/accept-payments#popup) for other available options you can add to the
 
 ## Deployment
+
 REMEMBER TO CHANGE THE KEY WHEN DEPLOYING ON A LIVE/PRODUCTION SYSTEM
 
-
 ## Contributing
+
 1. Fork it!
 2. Create your feature branch: `git checkout -b feature-name`
 3. Commit your changes: `git commit -am 'Some commit message'`
@@ -135,7 +149,5 @@ Thanks!
 Ayeni Olusegun.
 
 ## License
+
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
-
-
-
