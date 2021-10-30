@@ -41,6 +41,9 @@ export default defineComponent({
         amount: {
             type: Number,
             required: true,
+            validator: (value)=> {
+                return value > 0
+            },
         },
         reference: {
             type: String,
@@ -48,7 +51,7 @@ export default defineComponent({
         },
         channels: {
             type: Array,
-            default: function() {
+            default:()=> {
                 return ["card", "bank"];
             },
         },
@@ -59,18 +62,18 @@ export default defineComponent({
         callback: {
             type: Function,
             required: true,
-            default: function(response) {
+            default: (response)=> {
                 return response;
             },
         },
         close: {
             type: Function,
             required: true,
-            default: function() {},
+            default: ()=> {},
         },
         metadata: {
             type: Object,
-            default: function() {
+            default: ()=> {
                 return {};
             },
         },
@@ -92,7 +95,7 @@ export default defineComponent({
         },
         split: {
             type: Object,
-            default: function() {
+            default:()=> {
                 return {};
             },
         },
@@ -112,7 +115,7 @@ export default defineComponent({
 
     setup(props) {
         const scriptLoaded = ref(null);
-        let loadScript = (callback) => {
+        const loadScript = (callback) => {
             const script = document.createElement("script");
             script.src = "https://js.paystack.co/v1/inline.js";
 
