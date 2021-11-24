@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { defineComponent, ref, onBeforeMount, onMounted } from "vue";
+import { defineComponent, ref, toRefs,onBeforeMount, onMounted } from "vue";
 
 export default defineComponent({
     name: "PayStack",
@@ -114,6 +114,28 @@ export default defineComponent({
     },
 
     setup(props) {
+        const {
+            paystackkey,
+            email,
+            firstname,
+            lastname,
+            channels,
+            amount,
+            accessCode,
+            reference,
+            callback,
+            close,
+            metadata,
+            currency,
+            plan,
+            quantity,
+            splitCode,
+            split,
+            subaccount,
+            transactionCharge,
+            bearer,
+            embed,
+        } = toRefs(props);
         const scriptLoaded = ref(null);
         const loadScript = (callback) => {
             const script = document.createElement("script");
@@ -134,7 +156,7 @@ export default defineComponent({
             } else {
                 // Others
                 script.onload = () => {
-                    callback();
+                    callback()
                 };
             }
         };
@@ -149,37 +171,37 @@ export default defineComponent({
             scriptLoaded.value &&
         scriptLoaded.value.then(() => {
             const paystackOptions = {
-                key: props.paystackkey,
-                email: props.email,
-                firstname: props.firstname,
-                lastname: props.lastname,
-                channels: props.channels,
-                amount: props.amount,
-                access_code: props.accessCode,
-                ref: props.reference,
+                key: paystackkey.value,
+                email: email.value,
+                firstname: firstname.value,
+                lastname: lastname.value,
+                channels: channels.value,
+                amount:amount.value,
+                access_code: accessCode.value,
+                ref: reference.value,
                 callback: (response) => {
-                    props.callback(response);
+                    callback.value(response);
                 },
                 onClose: () => {
-                    props.close();
+                    close.value();
                 },
-                metadata: props.metadata,
-                currency: props.currency,
-                plan: props.plan,
-                quantity: props.quantity,
-                subaccount: isDynamicSplit() ? "" : props.subaccount,
-                split: isDynamicSplit() ? props.split.value : null,
-                split_code: isDynamicSplit() ? "" : props.splitCode,
-                transaction_charge: isDynamicSplit() ? 0 : props.transactionCharge,
-                bearer: isDynamicSplit() ? "" : props.bearer,
+                metadata: metadata.value,
+                currency: currency.value,
+                plan:plan.value,
+                quantity: quantity.value,
+                subaccount: isDynamicSplit() ? "" : subaccount.value,
+                split: isDynamicSplit() ? split.value : null,
+                split_code: isDynamicSplit() ? "" : splitCode.value,
+                transaction_charge: isDynamicSplit() ? 0 : transactionCharge.value,
+                bearer: isDynamicSplit() ? "" : bearer.value,
             };
 
-            if (props.embed) {
+            if (embed.value) {
                 paystackOptions.container = "paystackEmbedContainer";
             }
 
             const handler = window.PaystackPop.setup(paystackOptions);
-            if (!props.embed) {
+            if (!embed.value) {
                 handler.openIframe();
             }
         });
@@ -192,7 +214,7 @@ export default defineComponent({
             });
         });
         onMounted(() => {
-            if (props.embed) {
+            if (embed.value) {
                 payWithPaystack();
             }
         });
