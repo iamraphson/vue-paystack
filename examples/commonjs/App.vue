@@ -4,13 +4,8 @@
             <paystack
                 :amount="amount"
                 :email="email"
-                :firstname="firstname"
-                :lastname="lastname"
-                :accessCode="accessCode"
-                :splitCode="splitCode"
-                :split="split"
                 :paystackkey="paystackkey"
-                :reference="genReference"
+                :reference="reference"
                 :callback="callback"
                 :close="close"
                 :embed="false"
@@ -29,18 +24,13 @@ export default {
     },
     data(){
         return{
-          paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxxx",
-          firstname: "Foo",
-          lastname: "Bar",
-          email: "foo@bar.com",
-          amount: 200000,
-          splitCode: "",
-          split: {},
-          channels: ['card']
+          paystackkey: "pk_test_a137d402b5975716e89952a898aad2832c961d69",
+          email: "foobar@example.com",
+          amount: 1000000
         }
     },
     computed: {
-      genReference(){
+      reference(){
         let text = "";
         let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -55,7 +45,7 @@ export default {
         console.log(response)
       },
       close: function(){
-          console.log("Payment closed")
+        console.log("Payment closed")
       }
     }
 }

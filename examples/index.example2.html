@@ -1,0 +1,66 @@
+<!-- Paystack example using Vue Object api -->
+<html>
+
+<head>
+    <title>Vue PayStack Example</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../dist/paystack.umd.min.js"></script>
+    <style>
+        body {
+            font-size: 1em;
+            font-family: 'Tahoma', sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <pay-stack :amount="amount" :email="email" :paystackkey="paystackkey" :reference="reference"
+            :callback="callback" :close="close" :embed="false" />
+        <i class="fas fa-money-bill-alt"></i>
+        Make Payment
+        </pay-stack>
+    </div>
+
+    <script type="text/javascript">
+        const paystackExample = {
+            data() {
+                return {
+
+                    paystackkey: "pk_test_xxxxxxxxxxxxxxxxxxxxxx",
+                    email: "foobar@example.com",
+                    amount: 1000000,
+                }
+            },
+            components: {
+                'PayStack': Paystack.default
+            },
+            computed: {
+                reference() {
+                    let text = "";
+                    let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+                    for (let i = 0; i < 10; i++)
+                        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+                    return text;
+                }
+            },
+            methods: {
+                callback: function (response) {
+                    console.log(response)
+                },
+                close: function () {
+                    console.log("Payment closed")
+                }
+            },
+
+        };
+        Vue.createApp(paystackExample).mount('#app')
+    </script>
+</body>
+
+</html>
