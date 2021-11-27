@@ -1,27 +1,26 @@
 {
   "name": "vue-paystack",
-  "version": "2.0.2",
-  "description": "Vue Paystack Component for Vue 2.x.",
-  "main": "dist/paystack.min.js",
+  "version": "3.0.0",
+  "description": "Vue Paystack Component for Vue 3.x.",
+  "main": "dist/paystack.umd.min.js",
   "scripts": {
-    "lint": "eslint src --ext=js,vue  || exit 0",
-    "lint:fix": "eslint src --ext=js,vue --fix  || exit 0",
-    "dev": "webpack-dev-server --content-base ./examples/commonjs --env=webpack.dev --open --hot",
-    "dist": "webpack --env=webpack.dist"
+    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix lib",
+    "lint:fix": "eslint lib --ext=js,vue --fix  || exit 0",
+    "build": "vite build --config vite.config.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/iamraphson/vue-paystack.git"
   },
   "files": [
-    "dist",
-    "src"
+    "dist"
   ],
   "keywords": [
     "PayStack",
     "Vue",
     "Vuejs",
     "Vue 2",
+    "Vue 3",
     "Payment Gateway"
   ],
   "author": "Ayeni Olusegun",
@@ -31,24 +30,10 @@
   },
   "homepage": "",
   "devDependencies": {
-    "@babel/cli": "^7.2.3",
-    "@babel/core": "^7.3.4",
-    "@babel/preset-env": "^7.3.4",
-    "babel-loader": "^8.0.5",
-    "css-loader": "^2.1.0",
-    "eslint-config-vue": "^2.0.2",
-    "eslint-loader": "^2.1.2",
-    "eslint-plugin-vue": "^5.2.2",
-    "standard": "^12.0.1",
-    "uglifyjs-webpack-plugin": "^2.1.2",
-    "vue": "^2.6.7",
-    "vue-loader": "^15.6.4",
-    "vue-template-compiler": "^2.6.7",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
-  },
-  "dependencies": {
-    "vue": "^2.6.7"
+    "@vitejs/plugin-vue": "^1.9.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-vue": "^7.18.0",
+    "vite": "^2.5.10",
+    "vue": "^3.2.13"
   }
 }
