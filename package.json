@@ -4,9 +4,9 @@
   "description": "Vue Paystack Component for Vue 3.x.",
   "main": "dist/paystack.umd.min.js",
   "scripts": {
-    "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix lib",
-    "lint:fix": "eslint lib --ext=js,vue --fix  || exit 0",
-    "build": "vite build --config vite.config.js"
+    "lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore --fix lib",
+    "lint:fix": "eslint lib --ext=js,ts,vue --fix  || exit 0",
+    "build": "vite build --config vite.config.ts"
   },
   "repository": {
     "type": "git",
@@ -30,10 +30,14 @@
   },
   "homepage": "",
   "devDependencies": {
+    "@types/node": "^18.15.3",
     "@vitejs/plugin-vue": "^1.9.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^7.18.0",
     "vite": "^2.5.10",
     "vue": "^3.2.13"
+  },
+  "dependencies": {
+    "typescript": "^4.9.5"
   }
 }

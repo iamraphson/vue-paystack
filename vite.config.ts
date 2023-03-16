@@ -9,9 +9,9 @@ module.exports = defineConfig({
 
   build: {
     lib: {
-      entry: path.resolve(__dirname, "lib/index.js"),
+      entry: path.resolve(__dirname, "lib/index.ts"),
       name: "Paystack",
-      fileName: (format) => `paystack.${format}.min.js`,
+      fileName: (format: string) => `paystack.${format}.min.js`,
     },
     rollupOptions: {
       // make sure to externalize deps that shouldn't be bundled

@@ -27,7 +27,12 @@ npm install vue vue-paystack --save
 
 #### Via NPM
 
-###### my-compnent.vue sample
+This library can be implemented in 2 different ways:
+1. By using the component provided by the library
+2. By using the composable provided by the library (For vue versions earlier than 2.7 you would need to install the composition api plugin)
+
+##### Using the Component
+###### my-component.vue sample
 
 ```vue
 <template>
@@ -83,6 +88,54 @@ export default {
 ```
 
 [Usage Example via NPM or Yarn](examples/commonjs/App.vue)
+
+##### Using the Composable
+###### my-component-two.vue sample
+
+```vue
+<template>
+  <div class="App">
+    <p class="App-intro">
+      <button @click="handlePayWithPaystack">Pay with paystack</button>
+    </p>
+  </div>
+</template>
+
+<script type="text/javascript">
+import usePaystackPayment from "../../src";
+export default {
+  setup() {
+    const paystackArgs = {
+      paystackkey: "pk_test_a137d402b5975716e89952a898aad2832c961d69",
+      email: "foobar@example.com",
+      amount: 1000000,
+      reference: "PayXYZ344234",
+    };
+
+    const payWithPaystack = usePaystackPayment(paystackArgs);
+
+    const callback = (response) => {
+      console.log(response);
+    };
+
+    const close = () => {
+      console.log("Payment closed");
+    };
+
+    const handlePayWithPaystack = () => {
+      payWithPaystack(callback, close);
+    };
+
+    return {
+      handlePayWithPaystack,
+    };
+  },
+};
+</script>
+```
+
+[Usage Example via NPM or Yarn](examples/commonjs/AppTwo.vue)
+
 
 #### via CDN
 
