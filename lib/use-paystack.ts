@@ -1,11 +1,11 @@
-import { toRefs } from "vue";
+import { watch } from "vue";
 import usePaystackScript from "./paystack-script";
 import type { callback, PaystackProps } from "./types";
 
 export default function usePaystackPayment(
   options: PaystackProps
 ): (callback?: callback, onClose?: () => void) => void {
-  const [scriptLoaded, scriptError] = toRefs(usePaystackScript());
+  const scriptState = usePaystackScript();
 
   const {
     paystackkey,
@@ -29,11 +29,11 @@ export default function usePaystackPayment(
   } = options;
 
   function initializePayment(callback?: callback, onClose?: callback): void {
-    if (scriptError.value) {
+    if (scriptState.scriptError) {
       throw new Error("Unable to load paystack inline script");
     }
 
-    if (scriptLoaded.value) {
+    if (scriptState.scriptLoaded) {
       const paystackArgs: Record<string, any> = {
         callback: callback ? callback : () => null,
         onClose: onClose ? onClose : () => null,
@@ -62,7 +62,7 @@ export default function usePaystackPayment(
       }
 
       // @ts-ignore
-      const handler = window.PaystackPop.setup(paystackOptions);
+      const handler = window.PaystackPop.setup(paystackArgs);
       if (!embed) {
         handler.openIframe();
       }

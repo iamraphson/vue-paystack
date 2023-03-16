@@ -10,8 +10,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, toRefs, onMounted } from "vue";
+import { defineComponent, toRefs, onMounted, onBeforeMount, watch } from "vue";
 import usePaystack from "./use-paystack";
+import usePaystackScript from "./paystack-script";
+
 import type { PropType } from "vue";
 import type {
   callback,
@@ -121,14 +123,26 @@ export default defineComponent({
 
   setup(props) {
     const { close, callback, ...others } = props;
-
+    const scriptState = usePaystackScript();
     const payWithPaystack = usePaystack(others);
 
-    onMounted(() => {
-      if (others.embed) {
+    const loadOnEmbed = () => {
+      if (others.embed && scriptState.scriptLoaded) {
         payWithPaystack(callback, close);
       }
+      if (scriptState.scriptError) {
+        throw new Error("Unable to load paystack inline script");
+      }
+    };
+
+    onMounted(() => {
+      loadOnEmbed();
     });
+
+    watch(scriptState, (newValue) => {
+      loadOnEmbed();
+    });
+
     return {
       payWithPaystack,
     };

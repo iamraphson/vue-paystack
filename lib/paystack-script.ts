@@ -1,26 +1,23 @@
-import { ref, onMounted, onUnmounted } from "vue";
+import { ref, onUnmounted, reactive, onBeforeMount } from "vue";
 
 const cachedScripts: string[] = [];
 interface IScriptResult {
-  loaded: boolean;
-  error: boolean;
+  scriptLoaded: boolean;
+  scriptError: boolean;
 }
 
-export default function usePaystackScript(): boolean[] {
+export default function usePaystackScript(): IScriptResult {
   const src = "https://js.paystack.co/v1/inline.js";
 
-  const scriptState = ref<IScriptResult>({
-    loaded: false,
-    error: false,
+  const scriptState = reactive<IScriptResult>({
+    scriptLoaded: false,
+    scriptError: false,
   });
 
   const script = ref<HTMLScriptElement>();
 
   const onScriptLoad = (): void => {
-    scriptState.value = {
-      loaded: true,
-      error: false,
-    };
+    scriptState.scriptLoaded = true;
   };
 
   const onScriptError = (): void => {
@@ -28,18 +25,12 @@ export default function usePaystackScript(): boolean[] {
     if (index >= 0) cachedScripts.splice(index, 1);
     script.value && script.value.remove();
 
-    scriptState.value = {
-      loaded: true,
-      error: false,
-    };
+    scriptState.scriptError = true;
   };
 
   const handleLoadScript = () => {
     if (cachedScripts.includes(src)) {
-      scriptState.value = {
-        loaded: true,
-        error: false,
-      };
+      scriptState.scriptLoaded = true;
     } else {
       cachedScripts.push(src);
 
@@ -57,7 +48,7 @@ export default function usePaystackScript(): boolean[] {
     }
   };
 
-  onMounted(() => {
+  onBeforeMount(() => {
     handleLoadScript();
   });
 
@@ -68,5 +59,5 @@ export default function usePaystackScript(): boolean[] {
     }
   });
 
-  return [scriptState.value.loaded, scriptState.value.error];
+  return scriptState;
 }
